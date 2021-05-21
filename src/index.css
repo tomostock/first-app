@@ -52,6 +52,7 @@ ol, ul {
 }
 .game-cap {
   font-size: 35px;
+  margin-bottom: 20px;
 }
 .highlight-color {
   background: #98fb98;
