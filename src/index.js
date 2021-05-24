@@ -71,6 +71,19 @@ class Game extends React.Component {
       xIsNext: (step % 2) === 0
     })
   }
+
+  prev_btn(stepNumber) {
+    return(
+      <button onClick={() => this.jumpTo(stepNumber-1)}>prev</button>
+    );
+  }
+
+  next_btn(stepNumber) {
+    return(
+      <button onClick={() => this.jumpTo(stepNumber+1)}>next</button>
+    );
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -81,13 +94,16 @@ class Game extends React.Component {
       'Re Start';
       return(
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)} className="history">
-            { move === this.state.stepNumber ? <strong>{desc}</strong> : desc }
-          </button>
+          { move === 0 ? 
+            <button onClick={() => this.jumpTo(move)} className="history">
+              { desc }
+            </button> 
+            : ""
+          }
         </li>
       );
     });
-
+    
     let status;
     let winLine = [];
     if (winner) {
@@ -112,6 +128,8 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <ol>{moves}</ol>
+          <ol>{this.prev_btn(this.state.stepNumber)}</ol>
+          <ol>{this.next_btn(this.state.stepNumber)}</ol>
         </div>
       </div>
     );
