@@ -74,8 +74,6 @@ class Game extends React.Component {
       oIsNext: (step % 2) === 0,
       prevCount: this.state.prevCount + 1
     })
-    console.log(this.state.prevCount);
-    console.log(this.state.stepNumber);
   }
 
   jumpToNext(step) {
@@ -84,8 +82,6 @@ class Game extends React.Component {
       oIsNext: (step % 2) === 0,
       prevCount: this.state.prevCount - 1
     })
-    console.log("prev:"+this.state.prevCount);
-    console.log("step:"+this.state.stepNumber);
   }
 
   prev_btn(stepNumber) {
@@ -101,7 +97,7 @@ class Game extends React.Component {
   }
 
   next_btn(stepNumber) {
-    if( this.state.stepNumber < 9 && this.state.prevCount > 0  ) {
+    if( this.state.stepNumber < 9 && this.state.prevCount > 1 ) {
       return(
         <button onClick={() => this.jumpToNext(stepNumber+1)}>&gt;</button>
       );        
@@ -139,6 +135,7 @@ class Game extends React.Component {
       status = 'Next player: ' + (this.state.oIsNext ? 'O' : 'X');
       if( this.state.stepNumber === 9) {
         status = "Draw";
+        winLine = [0,1,2,3,4,5,6,7,8]
       }
     }
     
