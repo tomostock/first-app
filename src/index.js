@@ -87,11 +87,13 @@ class Game extends React.Component {
   prev_btn(stepNumber) {
     if( this.state.stepNumber > 0 && this.state.stepNumber < 9 ) {
       return(
-        <button onClick={() => this.jumpTo(stepNumber-1)}>&lt;</button>
+        <button onClick={() => this.jumpTo(stepNumber-1)} className="button">
+          ◀︎
+        </button>
       );
     }else{
       return(
-        <button>&lt;</button>
+        <button className="button">◀︎</button>
       );
     }
   }
@@ -99,11 +101,13 @@ class Game extends React.Component {
   next_btn(stepNumber) {
     if( this.state.stepNumber < 9 && this.state.prevCount > 1 ) {
       return(
-        <button onClick={() => this.jumpToNext(stepNumber+1)}>&gt;</button>
+        <button onClick={() => this.jumpToNext(stepNumber+1)} className="button">
+          ▶︎
+        </button>
       );        
     }else{
       return(
-        <button>&gt;</button>
+        <button className="button">▶︎</button>
       );
     }
   }
@@ -113,7 +117,7 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
     const moves = history.map((step, move) => {
-      const desc = move ? '' : 'Re Start';
+      const desc = move ? '' : 'reset';
       return(
         <li key={move}>
           { move === 0 ? 
@@ -150,9 +154,9 @@ class Game extends React.Component {
           />
         </div>
         <div className="game-info">
-          <ol>{moves}</ol>
           <ol>{this.prev_btn(this.state.stepNumber)}</ol>
           <ol>{this.next_btn(this.state.stepNumber)}</ol>
+          <ol>{moves}</ol>
         </div>
       </div>
     );

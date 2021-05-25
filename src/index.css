@@ -48,26 +48,39 @@ ol, ul {
 }
 
 .game-info {
-  /* margin-left: 20px; */
+  display: flex;
 }
 .game-cap {
   font-size: 35px;
   margin-bottom: 20px;
 }
 .highlight-color {
-  background: #98fb98;
+  background: #90ee90;
 }
-
+.highlight-colorD {
+  background: #1e90ff;
+}
+.button {
+  display: inline-block;
+  border-radius: 5px;
+  font-size: 12pt;
+  text-align: center;
+  cursor: pointer;
+  padding: 15px;
+  background: #f4a460;
+  color: #ffffff;
+  line-height: 1em;
+  border: none;
+}
 .history {
   display: inline-block;
   border-radius: 5px;
   font-size: 12pt;
   text-align: center;
   cursor: pointer;
-  padding: 15px 35px;
+  padding: 15px 40px;
   background: #ff8c00;
   color: #ffffff;
   line-height: 1em;
   border: none;
-  margin-bottom: 5px;
 }
