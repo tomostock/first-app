@@ -33,8 +33,8 @@ class Board extends React.Component {
         }
       </div>
     );
-    }
   }
+}
 
 class Game extends React.Component {
   constructor(props) {
@@ -44,7 +44,8 @@ class Game extends React.Component {
         squares: Array(9).fill(null)
       }],
       stepNumber: 0,
-      xIsNext: true
+      oIsNext: true,
+      prevCount: 1
     };
   }
 
@@ -52,36 +53,63 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = this.state.xIsNext ? 'O' : 'X';
+    squares[i] = this.state.oIsNext ? 'O' : 'X';
     this.setState({
       history: history.concat([{
         squares: squares
       }]),
       stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
+      oIsNext: !this.state.oIsNext,
+      prevCount: this.state.prevCount
     });
   }
 
   jumpTo(step) {
     this.setState({
       stepNumber: step,
-      xIsNext: (step % 2) === 0
+      oIsNext: (step % 2) === 0,
+      prevCount: this.state.prevCount + 1
     })
+    console.log(this.state.prevCount);
+    console.log(this.state.stepNumber);
+  }
+
+  jumpToNext(step) {
+    this.setState({
+      stepNumber: step,
+      oIsNext: (step % 2) === 0,
+      prevCount: this.state.prevCount - 1
+    })
+    console.log("prev:"+this.state.prevCount);
+    console.log("step:"+this.state.stepNumber);
   }
 
   prev_btn(stepNumber) {
-    return(
-      <button onClick={() => this.jumpTo(stepNumber-1)}>prev</button>
-    );
+    if( this.state.stepNumber > 0 && this.state.stepNumber < 9 ) {
+      return(
+        <button onClick={() => this.jumpTo(stepNumber-1)}>&lt;</button>
+      );
+    }else{
+      return(
+        <button>&lt;</button>
+      );
+    }
   }
 
   next_btn(stepNumber) {
-    return(
-      <button onClick={() => this.jumpTo(stepNumber+1)}>next</button>
-    );
+    if( this.state.stepNumber < 9 && this.state.prevCount > 0  ) {
+      return(
+        <button onClick={() => this.jumpToNext(stepNumber+1)}>&gt;</button>
+      );        
+    }else{
+      return(
+        <button>&gt;</button>
+      );
+    }
   }
 
   render() {
@@ -89,9 +117,7 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
     const moves = history.map((step, move) => {
-    const desc = move ?
-      'Go to #' + move :
-      'Re Start';
+      const desc = move ? '' : 'Re Start';
       return(
         <li key={move}>
           { move === 0 ? 
@@ -110,7 +136,7 @@ class Game extends React.Component {
       status = 'Winner: ' + winner.player;
       winLine = winner.line;
     } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'O' : 'X');
+      status = 'Next player: ' + (this.state.oIsNext ? 'O' : 'X');
       if( this.state.stepNumber === 9) {
         status = "Draw";
       }
@@ -171,6 +197,5 @@ function calculateWinner(squares) {
       return { player: squares[a], line: [a, b, c] };
     }
   }
-
   return null;
 }
